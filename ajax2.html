@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title Here</title>
+    <!-- Add any additional meta tags, CSS links, or JavaScript links here -->
+    
+</head>
+<body>
+    <div id="txt"></div>
+    <button id="button">get data</button>
+
+    <script>
+        details=document.getElementById("txt")
+        btn=document.getElementById("button")
+
+        btn.addEventListener('click',Fetchdata)
+
+
+        function Fetchdata(){
+            
+            let xhr=new XMLHttpRequest()
+            
+
+            //sending a request to the remote web server to get the data related to country
+            xhr.open("GET","https://restcountries.com/v3.1/name/india",true);
+            xhr.send()
+
+            xhr.onprogress=function(event){
+                if (event.lengthComputable) {
+                    var percentComplete = (event.loaded / event.total) * 100;
+                    // Update your UI with the progress information (e.g., display a progress bar).
+                    details.innerHTML='Progress: ' + percentComplete + '%'
+                  } else {
+                    // Unable to compute progress information if event.lengthComputable is false.
+                    details.innerHTML='Progress information not available.'
+                  }
+            };
+
+            xhr.onload=function(){
+                if(xhr.status===2000){
+                    // converting json data into object
+                    let res=JSON.parse(xhr.responseText)
+
+                    //using detsructing method to extract the values and to assign them to a variables
+                    let [country] = res;
+
+                    // displaying  country flag 
+                    details.innerHTML=`<img src='${country.flags.png}'>`   
+                }
+                
+              
+
+                    
+
+                
+
+                    
+                    
+
+            };
+
+        };
+
+
+    </script>
+</body>
+</html>

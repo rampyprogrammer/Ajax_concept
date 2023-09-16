@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title Here</title>
+    <!-- Add any additional meta tags, CSS links, or JavaScript links here -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="txt"></div>
+    <button id="button">get data</button>
+
+    <script>
+        details=document.getElementById("txt")
+        btn=document.getElementById("button")
+
+        btn.addEventListener('click',Fetchdata)
+
+
+        function Fetchdata(){
+            
+            let xhr=new XMLHttpRequest()
+
+            xhr.open("GET","test.json",true);
+            xhr.send()
+
+            xhr.onprogress=function(eve){
+                details.innerHTML=eve
+            };
+
+            xhr.onload=function(){
+                let res=JSON.parse(xhr.responseText)
+                
+                let tab =`<table border='2'><tr>`
+                    for(key in res){
+                        tab+=`<th> ${key} </th>`
+
+                    };
+                    tab+=`</tr><tr>`
+                    for(key in res){
+                        tab+=`<td> ${res[key]}</td>`
+
+                    };
+                    tab+=`</tr></table>`
+
+                    details.innerHTML=tab;
+
+                
+
+                    
+                    
+
+            };
+
+        };
+
+
+    </script>
+</body>
+</html>
